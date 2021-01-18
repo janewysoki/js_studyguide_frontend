@@ -1,7 +1,7 @@
 
 class StudyGuide {
     constructor(attributes) {
-        let whitelist = []
+        let whitelist = ["id", "name"]
         whitelist.forEach(attr => this[attr] = attributes[attr])
     }
 
@@ -20,7 +20,7 @@ class StudyGuide {
 
 class Flashcard {
     constructor(attributes) {
-        let whitelist = []
+        let whitelist = ["id", "cardfront", "cardback", "subject", "memorized", "study_guide_id"]
         whitelist.forEach(attr => this[attr] = attributes[attr])
     }
 
