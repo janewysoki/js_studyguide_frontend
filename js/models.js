@@ -45,18 +45,18 @@ class StudyGuide {
 
     render() {
         this.element ||= document.createElement('li');
-        this.element.class = "my-2 px-4 bg-green-200 grid grid-cols-12 sm:grid-cols-6";
+        this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12 sm:grid-cols-6".split(" "));
 
         this.nameLink ||= document.createElement('a');
-        this.nameLink.class = "py-4 col-span-10  sm:col-span-4";
+        this.nameLink.classList.add(..."py-4 col-span-10  sm:col-span-4".split(" "));
         this.nameLink.textContent = this.name;
 
         this.editLink ||= document.createElement('a');
-        this.editLink.class = "my-4 text-right";
+        this.editLink.classList.add(..."my-4 text-right".split(" "));
         this.editLink.innerHTML = `<i class="fa fa-pencil-alt"></i>`;
 
         this.deleteLink ||= document.createElement('a');
-        this.deleteLink.class = "my-4 text-right";
+        this.deleteLink.classList.add(..."my-4 text-right".split(" "));
         this.deleteLink.innerHTML = `<i class="fa fa-trash-alt"></i>`;
 
         this.element.append(this.nameLink, this.editLink, this.deleteLink);
