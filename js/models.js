@@ -32,9 +32,10 @@ class StudyGuide {
             })
             .then(studyGuidesJson => {
                 this.collection = studyGuidesJson.map(attrs => new  StudyGuide(attrs))
+                let renderedGuides = this.collection.map(studyGuide => studyGuide.render())
+                this.container().append(...renderedGuides)
+                // append is NOT looking for an array, it wants a series of elements so we change it to ...renderedGuides
                 
-                console.log(this);
-                debugger
             })
     }
 
