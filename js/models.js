@@ -8,11 +8,7 @@ class StudyGuide {
     }
 
     static container() {
-        return this.c ||= document.querySelector("#studyGuidesContainer")
-    }
-
-    static guide() {
-        return this.g ||= document.querySelector('#guides')
+        return this.c ||= document.querySelector("#guides")
     }
 
     // StudyGuide.all() will return a promise for all of the study_guide objects that we get from fetching to /study_guides
@@ -34,9 +30,11 @@ class StudyGuide {
                     return res.text().then(error => Promise.reject(error)) // return a rejected promise so we skip the following then and go to catch
                 }
             })
-            .then(studyGuideArray => {
-                this.collection = studyGuideArray.map(attrs => new  StudyGuide(attrs))
+            .then(studyGuidesJson => {
+                this.collection = studyGuidesJson.map(attrs => new  StudyGuide(attrs))
                 
+                console.log(this);
+                debugger
             })
     }
 
@@ -48,7 +46,7 @@ class StudyGuide {
         this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12 sm:grid-cols-6".split(" "));
 
         this.nameLink ||= document.createElement('a');
-        this.nameLink.classList.add(..."py-4 col-span-10  sm:col-span-4".split(" "));
+        this.nameLink.classList.add(..."py-4 col-span-10 sm:col-span-4".split(" "));
         this.nameLink.textContent = this.name;
 
         this.editLink ||= document.createElement('a');
