@@ -35,7 +35,7 @@ class StudyGuide {
                 let renderedGuides = this.collection.map(studyGuide => studyGuide.render())
                 this.container().append(...renderedGuides)
                 // append is NOT looking for an array, it wants a series of elements so we change it to ...renderedGuides
-                
+                return this.collection //bc i might want to use return value later; return a promise
             })
     }
 
