@@ -43,12 +43,38 @@ class StudyGuide {
 
     }
 
-
+    //gets us the instance
     static findbyId() {
         return this.collection.find(studyGuide => studyGuide.id == id)
     }
 
-    
+    edit() {
+        //remove links i added and grid classes so form looks good
+        [this.nameLink, this.editLink, this.deleteLink].forEach(eg => eg.remove())
+        this.element.classList.remove(..."grid grid-cols-12 sm:grid-cols-6 pl-4".split(" "))
+        //then checks if form already exists, then all we do is replace name input value with name of studyguide
+        if (this.form) {
+            this.nameInput.value = this.name;
+        } else { //otherwise create the form
+            this.form = document.createElement('form');
+            //then add classlist to make it look the way it should
+            //run split to get array of class names 
+            //then call spread operator on that array to spread out each element to be a separate argument to classList (which accepts a sequence of strings as an arg)
+            this.form.classList.add(..."editStudyGuideForm flex mt-4".split(" "));
+            this.form.dataset.studyGuideId = this.id;
+            //add name input
+            this.nameInput = document.createElement('input');
+            this.nameInput.value = this.name;
+            this.nameInput.name = 'name';
+            this.nameInput.classList.add(..."flex-1 p-3".split(" "));
+            //add save button
+            this.saveButton = document.createElement('button');
+            this.saveButton.classList.add("flex-none");
+            this.saveButton.innterHTML = `<i class="fa fa-save p-4 z--1 bg-green-400"></i>`
+        }
+        
+
+    }
     // studyGuide.render() will create an li element and assign it to this.element
     // it will then fill the element with contents looking like the below html:
 
