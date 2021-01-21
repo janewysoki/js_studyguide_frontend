@@ -71,6 +71,8 @@ class StudyGuide {
             this.saveButton = document.createElement('button');
             this.saveButton.classList.add("flex-none");
             this.saveButton.innterHTML = `<i class="fa fa-save p-4 z--1 bg-green-400"></i>`
+            //then put the save button into the form
+            this.form.append(this.nameInput, this.saveButton);
         }
         
 
