@@ -169,3 +169,27 @@ class Flashcard {
         return this.c ||= document.querySelector("#cards")
     }
 }
+
+class FlashMessage {
+    constructor({message, type}) {
+      this.error = type === "error";
+      this.message = message;
+      this.render()
+    }
+  
+    container() {
+      return this.c ||= document.querySelector("#flash")
+    }
+  
+    render() {
+      this.container().textContent = this.message;
+      this.toggleDisplay();
+      setTimeout(() => this.toggleDisplay(), 5000);
+    }
+  
+    toggleDisplay() {
+      this.container().classList.toggle('opacity-0');
+      this.container().classList.toggle(this.error ? 'bg-red-200' : 'bg-blue-200')
+      this.displayed = !this.displayed;
+    } 
+  }
