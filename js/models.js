@@ -39,6 +39,16 @@ class StudyGuide {
             })
     }
 
+    static create() {
+
+    }
+
+
+    static findbyId() {
+        return this.collection.find(studyGuide => studyGuide.id == id)
+    }
+
+    
     // studyGuide.render() will create an li element and assign it to this.element
     // it will then fill the element with contents looking like the below html:
 
