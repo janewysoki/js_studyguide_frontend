@@ -39,8 +39,32 @@ class StudyGuide {
             })
     }
 
-    static create() {
-
+    static create(formData) {
+        return fetch("http://localhost:3000/study_guides", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            } else {
+                return res.text().then(errors => Promise.reject(errors))
+            }
+        })
+        .then (json => {
+            let studyGuide = new StudyGuide(json);
+            this.collection.push(studyGuide);
+            this.container().appendChild(studyGuide.render());
+            new FlashMessage({type: 'success', message: 'StudyGuide created successfully'})
+            return studyGuide;
+        })
+        .catch(error => {
+            new FlashMessage({type: 'error', message: error})
+        })
     }
 
     //gets us the instance
