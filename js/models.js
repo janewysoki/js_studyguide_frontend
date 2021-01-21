@@ -105,6 +105,38 @@ class StudyGuide {
     // studyGuide.render() will create an li element and assign it to this.element
     // it will then fill the element with contents looking like the below html:
 
+    update(formData) {
+        return fetch(`http://localhost:3000/study_guides/${this.id}`, {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(formData)
+          })
+            .then(res => {
+              if(res.ok) {
+                return res.json()
+              } else {
+                return res.text().then(errors => Promise.reject(errors))
+              }
+            })
+            .then(json => {
+              //update this object with the json response
+              Object.keys(json).forEach((key) => this[key] = json[key])
+              // remove the form
+              this.form.remove();
+              // add the nameLink edit and delete links in again.
+              this.render();
+              new FlashMessage({type: 'success', message: 'StudyGuide updated successfully'})
+              return studyGuide;
+            })
+            .catch(error => {
+              new FlashMessage({type: 'error', message: error});
+            })
+    }
+
+
     render() {
         this.element ||= document.createElement('li');
         this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12 sm:grid-cols-6".split(" "));
