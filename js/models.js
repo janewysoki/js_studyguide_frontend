@@ -74,8 +74,9 @@ class StudyGuide {
             //then put the save button into the form
             this.form.append(this.nameInput, this.saveButton);
         }
-        
-
+        //then add the form into the guide item
+        this.element.append(this.form);
+        this.nameInput.focus();
     }
     // studyGuide.render() will create an li element and assign it to this.element
     // it will then fill the element with contents looking like the below html:
