@@ -156,9 +156,31 @@ class Flashcard {
     }
 
     render() {
+        this.element ||= document.createElement('li');
+        this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12".split(" "));
+        
+        this.markMemorizedLink ||= document.createElement('a');
+        this.markMemorizedLink.classList.add(..."my-1 text-center".split(" "));
+        this.markMemorizedLink.innerHTML = `<i class="p-4 far fa-circle">`;
 
+        this.nameSpan ||= document.createElement('span');
+        this.nameSpan.classList.add(..."py-4 col-span-9".split(" "));
+        this.nameSpan.textContent = this.name;
+
+        this.editLink ||= document.createElement('a');
+        this.editLink.classList.add(..."my-1 text-right".split(" "));
+        this.editLink.innerHTML = `<i class="p-4 fa fa-pencil-alt"></i>`;
+
+        this.deleteLink ||= document.createElement('a');
+        this.deleteLink.classList.add(..."my-1 text-right".split(" "));
+        this.deleteLink.innerHTML = `<i class="p-4 fa fa-trash-alt"></i>`;
+
+        this.element.append(this.markMemorizedLink, this.nameSpan, this.editLink, this.deleteLink);
+        
+        return this.element;
     }
 }
+
 
 // new FlashMessage({type: 'error', message: 'Name is required'})
 // this will create flash message and fade it in
