@@ -7,7 +7,7 @@ document.addEventListener('click', function(e) {
     let target = e.target;
     if(target.matches(".selectStudyGuide")) {
         let studyGuide = StudyGuide.findById(target.dataset.studyGuideId)
-        studyGuide.show()
+        studyGuide.show() // calling show on the instance found in line above
     }
 })
 

@@ -84,7 +84,31 @@ class StudyGuide {
         })
     }
 
+    //instance method
+    //studyGuide.show() => {
+        //fetch the /study_guides/:id route to get studyguide and its associated flashcards
+        //use the response to create flashcard instances client side by invoking Flashcard.loadByGuide(id, flashcardsAttributes)
+    //}
 
+    show() {
+        return fetch(`http://localhost:3000/study_guides/${this.id}`, {
+            method: 'GET', 
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => {
+            if(res.ok) {
+                return res.json() //returns a promise for body content parsed as json
+            } else {
+                return res.text().then(error => Promise.reject(error)) // return a rejected promise so we skip the following then
+            }
+        })
+        .then(data => {
+            debugger
+        })
+    }
     
     render() {
         this.element ||= document.createElement('li');
