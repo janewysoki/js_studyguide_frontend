@@ -144,6 +144,11 @@ class Flashcard {
         return this.c ||= document.querySelector("#flashcards")
     }
 
+    static collection() {
+        return this.coll ||= {};
+    }
+
+
     //create flashcard instances using flashcardsAttributes
     //call render on each of the instances to build the associated DOM node
     //clear out the container() contents
@@ -151,10 +156,11 @@ class Flashcard {
     static loadByGuide(id, flashcardsAttributes) {
         Flashcard.study_guide_id = id;
         let flashcards = flashcardsAttributes.map(flashcardAttributes => new Flashcard(flashcardAttributes));
+        this.collection()[id] = flashcards;
         let rendered = flashcards.map(flashcard => flashcard.render());
         //when you call this method it will remove the contents of the container to replace them with new flashcards
         this.container().innerHTML = "";
-        this.container().append(...rendered)
+        this.container().append(...rendered);
     }
 
     render() {
@@ -165,9 +171,9 @@ class Flashcard {
         this.markMemorizedLink.classList.add(..."my-1 text-center".split(" "));
         this.markMemorizedLink.innerHTML = `<i class="p-4 far fa-circle">`;
 
-        this.nameSpan ||= document.createElement('span');
-        this.nameSpan.classList.add(..."py-4 col-span-9".split(" "));
-        this.nameSpan.textContent = this.name;
+        this.cardFrontSpan ||= document.createElement('span');
+        this.cardFrontSpan.classList.add(..."py-4 col-span-9".split(" "));
+        this.cardFrontSpan.textContent = this.cardfront;
 
         this.editLink ||= document.createElement('a');
         this.editLink.classList.add(..."my-1 text-right".split(" "));
@@ -177,7 +183,7 @@ class Flashcard {
         this.deleteLink.classList.add(..."my-1 text-right".split(" "));
         this.deleteLink.innerHTML = `<i class="p-4 fa fa-trash-alt"></i>`;
 
-        this.element.append(this.markMemorizedLink, this.nameSpan, this.editLink, this.deleteLink);
+        this.element.append(this.markMemorizedLink, this.cardFrontSpan, this.editLink, this.deleteLink);
         
         return this.element;
     }
