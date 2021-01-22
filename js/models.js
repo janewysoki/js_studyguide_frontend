@@ -152,6 +152,8 @@ class Flashcard {
         Flashcard.study_guide_id = id;
         let flashcards = flashcardsAttributes.map(flashcardAttributes => new Flashcard(flashcardAttributes));
         let rendered = flashcards.map(flashcard => flashcard.render());
+        //when you call this method it will remove the contents of the container to replace them with new flashcards
+        this.container().innerHTML = "";
         this.container().append(...rendered)
     }
 
