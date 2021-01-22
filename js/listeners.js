@@ -3,7 +3,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 })
 
 document.addEventListener('click', function(e) {
-    console.dir(e.target)
+    //store target
+    let target = e.target;
+
+    if(target.matches(".selectStudyGuide")) {
+        console.log('selected study guide:', target.dataset.studyGuideId)
+    }
+    
 })
 
 document.addEventListener('submit', function(e) {

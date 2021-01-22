@@ -39,6 +39,10 @@ class StudyGuide {
             })
     }
 
+    //StudyGuide.findById(id) accepts id as an arg and returns the SG matching that id
+    static findById(id) {
+        return this.collection.find(studyGuide => studyGuide.id == id); //google double equals vs triple
+    }
 
     //StudyGuide.create(formData) makes a fetch request to create new SG in database
     //will use a successful resp to create new SG client side, store it in this.collection
@@ -87,8 +91,9 @@ class StudyGuide {
         this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12 sm:grid-cols-6".split(" "));
 
         this.nameLink ||= document.createElement('a');
-        this.nameLink.classList.add(..."py-4 col-span-10 sm:col-span-4".split(" "));
+        this.nameLink.classList.add(..."py-4 col-span-10 sm:col-span-4 selectStudyGuide".split(" "));
         this.nameLink.textContent = this.name;
+        this.nameLink.dataset.studyGuideId = this.id; //DOMStringMap 
 
         this.editLink ||= document.createElement('a');
         this.editLink.classList.add(..."my-4 text-right".split(" "));
