@@ -105,7 +105,8 @@ class StudyGuide {
                 return res.text().then(error => Promise.reject(error)) // return a rejected promise so we skip the following then
             }
         })
-        .then(data => {
+        .then(({id, flashcardsAttributes}) => {
+            Flashcard.loadByGuide(id, flashcardsAttributes)
             debugger
         })
     }
