@@ -47,7 +47,7 @@ class StudyGuide {
     //will return promise for SG obj created\
     
     static create(formData) {
-        return fetch("http://localhost:3000/study_guides",, {
+        return fetch("http://localhost:3000/study_guides", {
             method: 'POST', //default method is GET; post requests require a body
             headers: {
                 "Accept": "application/json",
@@ -56,7 +56,7 @@ class StudyGuide {
             //formdata is an object and when we send info to server we don't want to send an object, we want to send a string so here we convert the object into string format in JSON
             //allows string to be parsed in ruby when it gets to server and then used as a hash to create a new SG on the server side
             //have to have key called study_guide so formdata is obj with things in our white list (just name for SG)
-            body: JSON.stringify(study_guide: formData)
+            body: JSON.stringify({study_guide: formData})
         })
         .then(res => {
             if(res.ok) {
