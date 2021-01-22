@@ -111,3 +111,28 @@ class Flashcard {
     }
 }
 
+// new FlashMessage({type: 'error', message: 'Name is required'})
+// this will create flash message and fade it in
+//it will also trigger a fade out in 5 seconds
+
+class FlashMessage {
+    constructor({type, message}) {
+        this.message = message;
+        //color will be red if error and blue if success
+        //type controls the background color
+        this.color = type == "error" ? 'bg-red-200' : 'bg-blue-100';
+        //when we create the message we then want to add it to the DOM:
+        this.render();
+    }
+
+    static container() {
+        this.c ||= document.querySelector('#flash')
+    }    
+
+    render() {
+        //message into the container
+        this.container().textContent = this.message;
+        this.container().classList.toggle(this.color);
+        this.container().classList.toggle('opacity-0');
+    }
+}
