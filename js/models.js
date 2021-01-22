@@ -39,6 +39,44 @@ class StudyGuide {
             })
     }
 
+
+    //StudyGuide.create(formData) makes a fetch request to create new SG in database
+    //will use a successful resp to create new SG client side, store it in this.collection
+    //will also call render on it to create the DOM element we'll use to represent it in our web page
+    //will then add that DOM note to SG.container()
+    //will return promise for SG obj created\
+    
+    static create(formData) {
+        return fetch("http://localhost:3000/study_guides",, {
+            method: 'POST', //default method is GET; post requests require a body
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            //formdata is an object and when we send info to server we don't want to send an object, we want to send a string so here we convert the object into string format in JSON
+            //allows string to be parsed in ruby when it gets to server and then used as a hash to create a new SG on the server side
+            //have to have key called study_guide so formdata is obj with things in our white list (just name for SG)
+            body: JSON.stringify(study_guide: formData)
+        })
+        .then(res => {
+            if(res.ok) {
+                return res.json() //returns a promise for body content parsed as json
+            } else {
+                return res.text().then(error => Promise.reject(error)) // return a rejected promise so we skip the following then and go to catch
+            }
+        })
+        .then(studyGuideAttributes => {
+            let studyGuide = new StudyGuide(studyGuideAttributes);
+            this.collection.push(studyGuide);
+            studyGuide.render() //this gives us list item element that represents that partiular study guide
+            //then put into the DOM
+            this.container().appendChild(studyGuide.render()); //look up diff bewteen append and appendchild
+            //return promise for SG created
+            return studyGuide;
+        })
+    }
+
+
     // static create(formData) {
     //     return fetch("http://localhost:3000/study_guides", {
     //         method: 'POST',
