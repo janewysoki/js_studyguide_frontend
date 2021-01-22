@@ -156,7 +156,7 @@ class Flashcard {
     static loadByGuide(id, flashcardsAttributes) {
         Flashcard.study_guide_id = id;
         let flashcards = flashcardsAttributes.map(flashcardAttributes => new Flashcard(flashcardAttributes));
-        this.collection()[id] = flashcards;
+        this.collection()[id] = flashcards; //the keys are the sg ids
         let rendered = flashcards.map(flashcard => flashcard.render());
         //when you call this method it will remove the contents of the container to replace them with new flashcards
         this.container().innerHTML = "";
