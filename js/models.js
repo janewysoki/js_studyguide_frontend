@@ -133,12 +133,17 @@ class FlashMessage {
     }    
 
     render() {
-        //message into the container
-        FlashMessage.container().textContent = this.message;
-        FlashMessage.container().classList.toggle(this.color);
-        FlashMessage.container().classList.toggle('opacity-0');
-        //these are flashmessage.container and not this.container because the container method
-        //is static but render method is not so "this" in container method is not the same this 
-        //as in render/
+       this.toggleMessage();
+       setTimeout(this.toggleMessage, 5000);
+    }
+
+    toggleMessage() {
+         //message into the container
+         FlashMessage.container().textContent = this.message;
+         FlashMessage.container().classList.toggle(this.color);
+         FlashMessage.container().classList.toggle('opacity-0');
+         //these are flashmessage.container and not this.container because the container method
+         //is static but render method is not so "this" in container method is not the same this 
+         //as in render/
     }
 }
