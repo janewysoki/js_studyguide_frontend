@@ -109,6 +109,9 @@ class StudyGuide {
             Flashcard.loadByGuide(id, flashcardsAttributes)
            
         })
+        .catch(err => {
+            return res.text().then(error => Promise.reject(err))
+        })
     }
     
     render() {
@@ -169,9 +172,12 @@ class Flashcard {
         //then we use the data we parsed to create a new flashcard instance, store ir, render it and add it to DOM at container()
         //if the resp is not okay, we'll return a rejected promise for the error and catch it with a callback which will display it in a FlashMessage
     static create(formData) {
-        //
+        //if there's no studyguide id for flashcard then throw error (can't just add blank flashcard)
         if(!Flashcard.study_guide_id) {
             return new FlashMessage({type: 'error', message: "Select a Study Guide before entering a Flashcard"});
+        } else {
+            //add key value pair to formdata obj if study guide id exists?
+            formData.study_guide_id = Flashcard.study_guide_id;
         }
         return fetch('/flashcards', {
             method: 'POST',
