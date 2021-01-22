@@ -71,6 +71,7 @@ class StudyGuide {
             studyGuide.render() //this gives us list item element that represents that partiular study guide
             //then put into the DOM
             this.container().appendChild(studyGuide.render()); //look up diff bewteen append and appendchild
+            new FlashMessage({type: 'success', message: 'New study guide added.'});
             //return promise for SG created
             return studyGuide;
         })
@@ -119,7 +120,7 @@ class Flashcard {
 //it will also trigger a fade out in 5 seconds
 
 class FlashMessage {
-    constructor({message, type}) {
+    constructor({type, message}) {
         this.message = message;
         //color will be red if error and blue if success
         //type controls the background color
@@ -134,7 +135,7 @@ class FlashMessage {
 
     render() {
        this.toggleMessage();
-       setTimeout(this.toggleMessage, 5000);
+       window.setTimeout(() => this.toggleMessage(), 5000);
     }
 
     toggleMessage() {
