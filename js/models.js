@@ -107,7 +107,7 @@ class StudyGuide {
         })
         .then(({id, flashcardsAttributes}) => {
             Flashcard.loadByGuide(id, flashcardsAttributes)
-            debugger
+           
         })
     }
     
@@ -141,7 +141,22 @@ class Flashcard {
     }
 
     static container() {
-        return this.c ||= document.querySelector("#cards")
+        return this.c ||= document.querySelector("#flashcards")
+    }
+
+    //create flashcard instances using flashcardsAttributes
+    //call render on each of the instances to build the associated DOM node
+    //clear out the container() contents
+    //append the rendered instances to the container()
+    static loadByGuide(id, flashcardsAttributes) {
+        Flashcard.study_guide_id = id;
+        let flashcards = flashcardsAttributes.map(flashcardAttributes => new Flashcard(flashcardAttributes));
+        let rendered = flashcards.map(flashcard => flashcard.render());
+        this.container().append(...rendered)
+    }
+
+    render() {
+
     }
 }
 
