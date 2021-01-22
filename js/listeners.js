@@ -20,6 +20,13 @@ document.addEventListener('submit', function(e) {
             formData[input.name] = input.value;
         })
         StudyGuide.create(formData);
+    } else if(target.matches('#newFlashcardForm')) {
+        e.preventDefault();
+        let formData = {};
+        target.querySelectorAll('input').forEach(function(input) {
+            formData[input.name] = input.value;
+        });
+        Flashcard.create(formData);
     }
 
 })

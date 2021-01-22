@@ -163,6 +163,29 @@ class Flashcard {
         this.container().append(...rendered);
     }
 
+    //Flashcard.create(formData)
+        //will make a fetch request using the form data and study_guide_id to create a new flashcard instance
+        //if resp is okay, we'll parse it as JSON and return that
+        //then we use the data we parsed to create a new flashcard instance, store ir, render it and add it to DOM at container()
+        //if the resp is not okay, we'll return a rejected promise for the error and catch it with a callback which will display it in a FlashMessage
+    static create(formData) {
+        //
+        if(!Flashcard.study_guide_id) {
+            return new FlashMessage({type: 'error', message: "Select a Study Guide before entering a Flashcard"});
+        }
+        return fetch('/flashcards', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                flashcard: formData
+            })
+        })
+
+    }
+
     render() {
         this.element ||= document.createElement('li');
         this.element.classList.add(..."my-2 px-4 bg-green-200 grid grid-cols-12".split(" "));
