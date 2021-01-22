@@ -5,11 +5,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
 document.addEventListener('click', function(e) {
     //store target
     let target = e.target;
-
     if(target.matches(".selectStudyGuide")) {
-        console.log('selected study guide:', target.dataset.studyGuideId)
+        let studyGuide = StudyGuide.findById(target.dataset.studyGuideId)
+        studyGuide.show()
     }
-    
 })
 
 document.addEventListener('submit', function(e) {
