@@ -74,6 +74,9 @@ class StudyGuide {
             //return promise for SG created
             return studyGuide;
         })
+        .catch(error => {
+            new FlashMessage({type: 'error', message: error});
+        })
     }
 
 
@@ -126,13 +129,16 @@ class FlashMessage {
     }
 
     static container() {
-        this.c ||= document.querySelector('#flash')
+        return this.c ||= document.querySelector('#flash')
     }    
 
     render() {
         //message into the container
-        this.container().textContent = this.message;
-        this.container().classList.toggle(this.color);
-        this.container().classList.toggle('opacity-0');
+        FlashMessage.container().textContent = this.message;
+        FlashMessage.container().classList.toggle(this.color);
+        FlashMessage.container().classList.toggle('opacity-0');
+        //these are flashmessage.container and not this.container because the container method
+        //is static but render method is not so "this" in container method is not the same this 
+        //as in render/
     }
 }
