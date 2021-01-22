@@ -119,7 +119,7 @@ class Flashcard {
 //it will also trigger a fade out in 5 seconds
 
 class FlashMessage {
-    constructor({type, message}) {
+    constructor({message, type}) {
         this.message = message;
         //color will be red if error and blue if success
         //type controls the background color
@@ -142,8 +142,5 @@ class FlashMessage {
          FlashMessage.container().textContent = this.message;
          FlashMessage.container().classList.toggle(this.color);
          FlashMessage.container().classList.toggle('opacity-0');
-         //these are flashmessage.container and not this.container because the container method
-         //is static but render method is not so "this" in container method is not the same this 
-         //as in render/
     }
 }
