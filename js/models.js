@@ -151,6 +151,9 @@ class Flashcard {
         return this.coll ||= {};
     }
 
+    static findById(id) {
+        return this.collection()[Flashcard.study_guide_id].find(flashcard => flashcard.id == id); //google double equals vs triple
+    }
 
     //create flashcard instances using flashcardsAttributes
     //call render on each of the instances to build the associated DOM node
