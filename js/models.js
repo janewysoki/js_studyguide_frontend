@@ -174,12 +174,13 @@ class Flashcard {
     static create(formData) {
         //if there's no studyguide id for flashcard then throw error (can't just add blank flashcard)
         if(!Flashcard.study_guide_id) {
-            return new FlashMessage({type: 'error', message: "Select a Study Guide before entering a Flashcard"});
+            return Promise.reject().catch(() => new FlashMessage({type: 'error', message: "Select a Study Guide before entering a Flashcard"}));
         } else {
             //add key value pair to formdata obj if study guide id exists?
-            formData.study_guide_id = Flashcard.study_guide_id;
+            formData.study_guide_id = Flashcard.study_guide_id
         }
-        return fetch('/flashcards', {
+        console.log(formData);
+        return fetch('http://localhost:3000/flashcards', {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -189,6 +190,30 @@ class Flashcard {
                 flashcard: formData
             })
         })
+        .then(res => {
+            if(res.ok) {
+                return res.json()
+            } else {
+                return res.text().then(error => Promise.reject(error))
+            }
+        })
+        .then(flashcardData => {
+            let flashcard = new Flashcard(flashcardData);
+            //debugger
+            this.collection()[Flashcard.study_guide_id].push(flashcard);
+            this.container().append(flashcard.render());
+            return flashcard;
+        })
+        .catch(error => {
+            return new FlashMessage({type: 'error', message: error})
+        })
+    }
+
+    //flashcard.toggleMemorized() will send fetch request to update the flashcard 
+    //with a completed attribute opposite to its current state. it will take a successful
+    //response and use it to update the flashcard object stored client side and update
+    //the DOM by invoking render on the updated flashcard
+    toggleMemorized() {
 
     }
 
@@ -198,11 +223,15 @@ class Flashcard {
         
         this.markMemorizedLink ||= document.createElement('a');
         this.markMemorizedLink.classList.add(..."my-1 text-center".split(" "));
-        this.markMemorizedLink.innerHTML = `<i class="p-4 far fa-circle">`;
+        this.markMemorizedLink.innerHTML = `<i class="toggleMemorized p-4 far fa-circle" data-flashcard-id="${this.id}"></i>`;
 
         this.cardFrontSpan ||= document.createElement('span');
-        this.cardFrontSpan.classList.add(..."py-4 col-span-9".split(" "));
+        this.cardFrontSpan.classList.add(..."cardFront py-4 col-span-4".split(" "));
         this.cardFrontSpan.textContent = this.cardfront;
+
+        this.cardBackSpan ||= document.createElement('div');
+        this.cardBackSpan.classList.add(..."cardBack py-4 col-span-5 max-h-0 overflow-hidden opacity-0".split(" "));
+        this.cardBackSpan.textContent = this.cardback;
 
         this.editLink ||= document.createElement('a');
         this.editLink.classList.add(..."my-1 text-right".split(" "));
@@ -212,7 +241,7 @@ class Flashcard {
         this.deleteLink.classList.add(..."my-1 text-right".split(" "));
         this.deleteLink.innerHTML = `<i class="p-4 fa fa-trash-alt"></i>`;
 
-        this.element.append(this.markMemorizedLink, this.cardFrontSpan, this.editLink, this.deleteLink);
+        this.element.append(this.markMemorizedLink, this.cardFrontSpan, this.cardBackSpan, this.editLink, this.deleteLink);
         
         return this.element;
     }
