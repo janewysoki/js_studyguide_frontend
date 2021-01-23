@@ -217,7 +217,33 @@ class Flashcard {
     //response and use it to update the flashcard object stored client side and update
     //the DOM by invoking render on the updated flashcard
     toggleMemorized() {
-
+        //console.log('in toggleMemorized for flashcard: ', this.id)
+        fetch(`http://localhost:3000/flashcards/${this.id}`, {
+            method: 'PUT',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                //stringify flashcard we want current status of memorized should be the opposite of what it is now
+                flashcard: { memorized: !this.memorized }
+            })
+        })
+        .then(res => {
+            if(res.ok) {
+                return res.json()
+            } else {
+                return res.text().then(error => Promise.reject(error))
+            }
+        })
+        .then(flashcardAttributes => {
+            Object.keys(flashcardAttributes).forEach(attr => this[attr] = flashcardAttributes[attr]);
+            this.render();
+            
+        })
+        .catch(error => {
+            return new FlashMessage({type: 'error', message: error});
+        })
     }
 
     render() {
