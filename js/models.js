@@ -256,7 +256,7 @@ class Flashcard {
         
         this.markMemorizedLink ||= document.createElement('a');
         this.markMemorizedLink.classList.add(..."my-1 text-center".split(" "));
-        this.markMemorizedLink.innerHTML = `<i class="toggleMemorized p-4 far fa-circle" data-flashcard-id="${this.id}"></i>`;
+        this.markMemorizedLink.innerHTML = `<i class="toggleMemorized p-4 far ${this.memorizedIconClass()}" data-flashcard-id="${this.id}"></i>`;
 
         this.cardFrontSpan ||= document.createElement('span');
         this.cardFrontSpan.classList.add(..."cardFront py-4 col-span-4".split(" "));
