@@ -239,11 +239,15 @@ class Flashcard {
         .then(flashcardAttributes => {
             Object.keys(flashcardAttributes).forEach(attr => this[attr] = flashcardAttributes[attr]);
             this.render();
-            
+
         })
         .catch(error => {
             return new FlashMessage({type: 'error', message: error});
         })
+    }
+
+    memorizedIconClass() {
+        return this.memorized ? 'fa-check-circle' : 'fa-circle';
     }
 
     render() {
